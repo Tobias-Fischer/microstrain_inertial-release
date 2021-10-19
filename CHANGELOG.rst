@@ -2,6 +2,9 @@
 Changelog for package mscl_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.5 (2021-10-19)
+------------------
+
 2.0.4 (2021-09-08)
 ------------------
 * Upgrade CMake version and removes unused include in examples
