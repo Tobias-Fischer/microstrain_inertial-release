@@ -1,3 +1,29 @@
+## microstrain_inertial (melodic) - 2.0.5-1
+
+The packages in the `microstrain_inertial` repository were released into the `melodic` distro by running `/home/rob/.local/bin/bloom-release --rosdistro melodic --track melodic microstrain_inertial --edit` on `Wed, 20 Oct 2021 21:30:47 -0000`
+
+These packages were released:
+- `microstrain_inertial_driver`
+- `microstrain_inertial_examples`
+- `microstrain_inertial_msgs`
+
+Version of package(s) in repository `microstrain_inertial`:
+
+- upstream repository: https://github.com/LORD-MicroStrain/microstrain_inertial.git
+- release repository: unknown
+- rosdistro version: `null`
+- old version: `null`
+- new version: `2.0.5-1`
+
+Versions of tools used:
+
+- bloom version: `0.10.7`
+- catkin_pkg version: `0.4.16`
+- rosdep version: `0.18.0`
+- rosdistro version: `0.8.0`
+- vcstools version: `0.1.42`
+
+
 ## microstrain_inertial (noetic) - 2.0.5-1
 
 The packages in the `microstrain_inertial` repository were released into the `noetic` distro by running `/home/rob/.local/bin/bloom-release --rosdistro noetic --track noetic microstrain_inertial` on `Tue, 19 Oct 2021 18:46:55 -0000`
