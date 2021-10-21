@@ -12,10 +12,10 @@ This repo is now structured differently as of `2.0.0`.
 There are three important branches that you may want to checkout:
 
 * [master](https://github.com/LORD-MicroStrain/ROS-MSCL/tree/master) -- Contains the most recent ROS1 changes before the transition to `2.0.0`. Kept for backwards compatibility, but no longer updated or supported
-* [ros](https://github.com/LORD-MicroStrain/ROS-MSCL/tree/ros) -- Contains ROS1 implementation for this node as of `2.0.0`. This version is being actively updated and supported
+* [main](https://github.com/LORD-MicroStrain/ROS-MSCL/tree/main) -- Contains ROS1 implementation for this node as of `2.0.0`. This version is being actively updated and supported
 * [ros2](https://github.com/LORD-MicroStrain/ROS-MSCL/tree/ros2) -- Contains ROS2 implementation for this node as of `2.0.0`. This version is being actively updated and supported
 
-Both the `ros` and `ros2` branches share most of their code by using the [ROS-MSCL-Common](https://github.com/LORD-MicroStrain/ROS-MSCL-Common) submodule which is submoduled in this repo at `microstrain_common`
+Both the `main` and `ros2` branches share most of their code by using the [ROS-MSCL-Common](https://github.com/LORD-MicroStrain/ROS-MSCL-Common) submodule which is submoduled in this repo at `microstrain_common`
 
 #### Different Package Names
 
@@ -27,8 +27,8 @@ Prior to version `2.0.0`, this repo contained the following ROS packages:
 
 Due to requirements laid out by the ROS maintainers [here](https://www.ros.org/reps/rep-0144.html), as of version `2.0.0`, this repo contains the following ROS packages:
 * `microstrain_inertial_driver` -- ROS node that will communicate with the devices
-* `microstrain_inertial_msgs` -- Collection of messages produces by the `microstrain_inertial_driver` node
-* `microstrain_inretial_examples` -- Collection of examples that show how to interact with the `microstrain_inertial_driver` node. Currently contains one simple C++ and python subscriber node
+* `microstrain_inertial_msgs` -- Collection of messages produced by the `microstrain_inertial_driver` node
+* `microstrain_inertial_examples` -- Collection of examples that show how to interact with the `microstrain_inertial_driver` node. Currently contains one simple C++ and python subscriber node
 
 ## Build Instructions
 
@@ -45,43 +45,48 @@ MSCL is now installed in the [CMakeLists.txt](./microstrain_inertial_driver/CMak
 
 If you already have MSCL installed and want to use your installed version instead of the one automatically downloaded, you can specify the location by passing the flag `-DMSCL_DIR=/usr/share/c++-mscl`
 
-We do our best to keep ROS-MSCL up-to-date with the latest MSCL changes, but sometimes there is a delay. The currently supported version of MSCL is [v62.1.2](https://github.com/LORD-MicroStrain/MSCL/releases/tag/v62.1.2)
+We do our best to keep ROS-MSCL up-to-date with the latest MSCL changes, but sometimes there is a delay. The currently supported version of MSCL is [v62.0.0](https://github.com/LORD-MicroStrain/MSCL/releases/tag/v62.0.0)
 
 #### Building from source
-1. Install ROS and create a workspace: [Installing and Configuring Your ROS Environment](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment)
+1. Install ROS2 and create a workspace: [Configuring Your ROS2 Environment](https://docs.ros.org/en/foxy/Tutorials/Configuring-ROS2-Environment.html)
 
-2. Move the entire microstrain_inertial folder (microstrain_inertial_driver, microstrain_inertial_msgs , and microstrain_common for just source) to the your_workspace/src directory.
+2. Move the entire ROS-MSCL folder (microstrain_inertial_driver, microstrain_inertial_msgs , and microstrain_common for just source) to the your_workspace/src directory.
 
 3. Locate and register the ros_mscl package: `rospack find microstrain_inertial_driver`
 
 4. Build your workspace:
         
         cd ~/your_workspace
-        catkin_make
-        source ~/your_workspace/devel/setup.bash
+        colcon build
+        source ~/your_workspace/install/setup.bash
    The source command may need to be run in each terminal prior to launching a ROS node.
 #### Launch the node and publish data
 The following command will launch the driver. Keep in mind each instance needs to be run in a separate terminal.
             
-        roslaunch microstrain_inertial_driver microstrain.launch
-Optional launch parameters:
-- name: namespace the node will publish messages to, default: gx5
-- port: serial port name to connect to the device over, default: /dev/ttyACM0
-- baudrate: baud rate to open the connection with, default: 115200
-- imu_rate: sample rate for IMU data (hz), default: 100
-- debug: output debug info? default: false
-- diagnostics: output diagnostic info? default: true
-    
+        ros2 launch microstrain_inertial_driver microstrain_launch.py
+
+This driver is implemented as a lifecycle node.  Upon running, the node will be in the unconfigured state and no interaction has occurred with the device.  The node must be transitioned as follows for data to be available:
+
+- transition to configure state: 
+
+    ros2 lifecycle set /gx5/microstrain_inertial_driver_node configure
+
+- transition to active state: 
+
+    ros2 lifecycle set /gx5/microstrain_inertial_driver_node activate
+
+You can stop data from streaming by putting the device into the "deactivate" state.  Both the "cleanup" and "shutdown" states will disconnect from the device and close the raw data log file (if enabled.)
+
 To check published topics:
         
-    rostopic list
+    ros2 topic list
 
 **Example**: Connect to and publish data from two devices simultaneously  
 In two different terminals:
     
-    roslaunch microstrain_inertial_driver microstrain.launch name:=sensor1234
+    ros2 launch microstrain_inertial_driver microstrain.launch name:=sensor1234
 
-    roslaunch microstrain_inertial_driver microstrain.launch name:=bestSensor port:=/dev/ttyACM1
+    ros2 launch microstrain_inertial_driver microstrain.launch name:=bestSensor port:=/dev/ttyACM1
 This will launch two nodes that publish data to different namespaces:
 - sensor1234, connected over port: /dev/ttyACM0
 - bestSensor, connected over port: /dev/ttyACM1
@@ -126,4 +131,3 @@ The `Makefile` exposes the following tasks. They can all be run from the `.devco
 microstrain_inertial is released under the MIT License - see the `LICENSE` file in the source distribution.
 
 Copyright (c)  2021, Parker Hannifin Corp.
-
