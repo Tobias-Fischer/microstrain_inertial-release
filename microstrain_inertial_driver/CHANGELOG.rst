@@ -2,13 +2,47 @@
 Changelog for package ros_mscl
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.0.5 (2021-10-21)
+2.1.0 (2021-11-12)
 ------------------
-* Updates maintainers and dependencies in preparation for ROS build farm
-* Updates submodule to check for correct architecture
-* Moves submodules to subdirectory to get bloom working
-* Renames packages to be more consistent with ROS naming conventions
-* Contributors: Rob Fisher, robbiefish
+* Adds transform broadcaster that will publish transform between filter_frame_id and filter_child_frame_id
+* Corrects some ENU conversions that were not being properly made
+* Properly disables/enables RTK dongle based on launch config
+* Publishes RTK data even when device_setup is set to false if the device was configured to send RTK data
+* Contributors: ianmooreparker, robbiefish
+
+2.0.5 (2021-10-19)
+------------------
+* Update MSCL version to fix ROS buildfarm errors hopefully
+* Contributors: robbiefish
+
+2.0.4 (2021-09-08)
+------------------
+* Upgrade CMake version and removes unused include in examples
+* Contributors: robbiefish
+
+2.0.3 (2021-09-08)
+------------------
+* Fixes missing dependencies in example and checks gcc directly for architecture
+* Contributors: robbiefish
+
+2.0.2 (2021-08-30)
+------------------
+* Fixes cmake warnings and updates maintainers
+* Contributors: robbiefish
+
+2.0.1 (2021-08-24)
+------------------
+* Moves submodules to accomodate ROS build farm
+* Contributors: Rob Fisher
+
+2.0.0 (2021-08-24)
+------------------
+* Optionally polls and waits for device to exist before trying to connect
+* Adds tolerance for streaming devices on startup by retrying connections until the device can be communicated with
+* Moves common code to submodule to reduce code duplication
+* Renames packages to be compatible with ROS build farm
+* Gracefully exits on device disconnect
+* Contributors: Rob Fisher
 
 1.1.4 (2021-07-30)
 ------------------

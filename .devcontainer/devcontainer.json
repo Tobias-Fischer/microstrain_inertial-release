@@ -1,11 +1,11 @@
 {
-    "name": "amd64/ros-mscl-dev:galactic",
+    "name": "amd64/ros-mscl-dev:noetic",
     "build": {
         "context": "..",
         "dockerfile": "Dockerfile.dev",
         "args": {
             "ARCH": "amd64",
-            "ROS_VERSION": "galactic",
+            "ROS_VERSION": "noetic",
             "USER_ID": "1000",
             "GROUP_ID": "1000"
         }

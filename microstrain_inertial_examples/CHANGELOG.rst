@@ -2,11 +2,34 @@
 Changelog for package ros_mscl_cpp_example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.0.5 (2021-10-21)
+2.1.0 (2021-11-12)
 ------------------
-* Updates maintainers and dependencies in preparation for ROS build farm
-* Renames packages to be more consistent with ROS naming conventions
-* Contributors: Rob Fisher, robbiefish
+
+2.0.5 (2021-10-19)
+------------------
+
+2.0.4 (2021-09-08)
+------------------
+* Upgrade CMake version and removes unused include in examples
+* Contributors: robbiefish
+
+2.0.3 (2021-09-08)
+------------------
+* Fixes missing dependencies in example and checks gcc directly for architecture
+* Contributors: robbiefish
+
+2.0.2 (2021-08-30)
+------------------
+* Fixes cmake warnings and updates maintainers
+* Contributors: robbiefish
+
+2.0.1 (2021-08-24)
+------------------
+
+2.0.0 (2021-08-24)
+------------------
+* Consolidates examples to single package
+* Contributors: Rob Fisher
 
 1.1.4 (2021-07-30)
 ------------------

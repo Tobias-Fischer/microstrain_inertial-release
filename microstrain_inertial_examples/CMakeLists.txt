@@ -1,21 +1,16 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.0.2)
 project(microstrain_inertial_examples)
 
-# Default to C++14
-if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
-endif()
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
+  roslint
+  sensor_msgs
+  microstrain_inertial_msgs
+)
 
-find_package(rclcpp REQUIRED)
-find_package(rclcpp_components REQUIRED)
-find_package(rclpy REQUIRED)
-find_package(ament_cmake REQUIRED)
-find_package(ament_cmake_python REQUIRED)
-find_package(sensor_msgs REQUIRED)
-find_package(microstrain_inertial_msgs REQUIRED)
-
-ament_export_include_directories()
-ament_export_dependencies(
+catkin_package(
+  CATKIN_DEPENDS
     roscpp
     rospy
     sensor_msgs
@@ -23,30 +18,31 @@ ament_export_dependencies(
     cmake_modules
 )
 
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
+
 # CPP Listener
 set(LISTENER_CPP listener_cpp)
 set(LISTENER_CPP_SRC_FILES src/listener.cpp)
 add_executable(${LISTENER_CPP} ${LISTENER_CPP_SRC_FILES})
-ament_target_dependencies(${LISTENER_CPP}
-  rclcpp
-  sensor_msgs
-  microstrain_inertial_msgs
+target_link_libraries(${LISTENER_CPP} ${catkin_LIBRARIES})
+add_dependencies(${LISTENER_CPP}
+  ${catkin_EXPORTED_TARGETS}
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
 )
 
-install(
-  TARGETS ${LISTENER_CPP}
-  DESTINATION lib/${PROJECT_NAME}
+# Python Listener
+catkin_install_python(PROGRAMS scripts/listener.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-# Install python executables
-install(PROGRAMS
-  scripts/listener.py
-  DESTINATION lib/${PROJECT_NAME}
+# Install the C++ Examples
+install(TARGETS ${LISTENER_CPP}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 # Install the launch files
-install(DIRECTORY launch
-  DESTINATION share/${PROJECT_NAME}
-)
+install(DIRECTORY launch/ DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch)
 
-ament_package()
+roslint_cpp(${LISTENER_CPP_SRC_FILES})
