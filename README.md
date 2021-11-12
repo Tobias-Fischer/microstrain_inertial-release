@@ -11,11 +11,14 @@ This repo is now structured differently as of `2.0.0`.
 #### Important Branches
 There are three important branches that you may want to checkout:
 
-* [master](https://github.com/LORD-MicroStrain/ROS-MSCL/tree/master) -- Contains the most recent ROS1 changes before the transition to `2.0.0`. Kept for backwards compatibility, but no longer updated or supported
 * [ros](https://github.com/LORD-MicroStrain/ROS-MSCL/tree/ros) -- Contains ROS1 implementation for this node as of `2.0.0`. This version is being actively updated and supported
 * [ros2](https://github.com/LORD-MicroStrain/ROS-MSCL/tree/ros2) -- Contains ROS2 implementation for this node as of `2.0.0`. This version is being actively updated and supported
+* [master](https://github.com/LORD-MicroStrain/ROS-MSCL/tree/master) -- Contains the most recent ROS1 changes before the transition to `2.0.0`. Kept for backwards compatibility, but no longer updated or supported
 
-Both the `ros` and `ros2` branches share most of their code by using the [ROS-MSCL-Common](https://github.com/LORD-MicroStrain/ROS-MSCL-Common) submodule which is submoduled in this repo at `microstrain_common`
+Both the `ros` and `ros2` branches share most of their code by using gis submodules. The following submodules contain most of the actual implementations:
+
+* [microstrain_inertial_driver_common](https://github.com/LORD-MicroStrain/microstrain_inertial_driver_common/tree/main) submoduled in this repo at `microstrain_inertial_driver/microstrain_inertial_driver_common`
+* [microstrain_inertial_msgs_common](https://github.com/LORD-MicroStrain/microstrain_inertial_msgs_common/tree/main) submoduled in this repo at `microstrain_inertial_msgs/microstrain_inertial_msgs_common`
 
 #### Different Package Names
 
@@ -31,6 +34,21 @@ Due to requirements laid out by the ROS maintainers [here](https://www.ros.org/r
 * `microstrain_inretial_examples` -- Collection of examples that show how to interact with the `microstrain_inertial_driver` node. Currently contains one simple C++ and python subscriber node
 
 ## Build Instructions
+
+### Buildfarm
+
+As of `v2.0.5` this package is being built and distributed by the ROS build farm. If you do not need to modify the source, it is recommended to install directly from the buildfarm by running the following commands where `ROS_DISTRO` is the version of ROS you are using such as `melodic` or `noetic`:
+
+```bash
+sudo apt-get update && sudo apt-get install ros-ROS_DISTRO-microstrain-inertial-driver
+```
+
+For more information on the ROS distros and platforms we support, please see [index.ros.org](https://index.ros.org/r/microstrain_inertial/github-LORD-MicroStrain-microstrain_inertial/#noetic)
+
+
+### Source
+
+If you need to modify the source of this repository, or are running on a platform that we do not support, you can build from source by following these instructions
 
 #### Submoduels
 This repo now takes advantage of git submodules in order to share code between ROS versions. When cloning the repo, you should clone with the `--recursive` flag to get all of the submodules.
@@ -54,7 +72,9 @@ We do our best to keep ROS-MSCL up-to-date with the latest MSCL changes, but som
 
 3. Locate and register the ros_mscl package: `rospack find microstrain_inertial_driver`
 
-4. Build your workspace:
+4. Install rosdeps for this package: `rosdep install --from-paths ~/your_workspace/src --ignore-src -r -y`
+
+5. Build your workspace:
         
         cd ~/your_workspace
         catkin_make
