@@ -26,7 +26,7 @@ endif()
 
 # Download and install MSCL
 include(${COMMON_DIR}/cmake/download_mscl.cmake)
-download_mscl(VERSION "63.1.0")
+download_mscl(VERSION "64.2.2")
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -180,5 +180,8 @@ install(FILES ${BOOST_LIBS} ${MSCL_DIR}/libmscl.so
 ## Testing ##
 #############
 
-## Run roslint on only the node files for now
-roslint_cpp(${LIB_SRC_FILES} ${LIB_INC_FILES} ${NODE_SRC_FILES} ${NODE_INC_FILES})
+# build/c++11 and whitespace/braces only trip on the buildfarm which is melodic, maybe it's not needed in noetic?
+set(ROSLINT_CPP_OPTS "--filter=-whitespace/line_length,-runtime/references,-readability/fn_size,-whitespace/parens,-build/c++11,-whitespace/braces")
+roslint_cpp()
+
+roslint_add_test()
