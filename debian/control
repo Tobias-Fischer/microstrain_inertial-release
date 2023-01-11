@@ -1,0 +1,12 @@
+Source: ros-melodic-microstrain-inertial-driver
+Section: misc
+Priority: optional
+Maintainer: Rob Fisher <rob.fisher@parker.com>
+Build-Depends: debhelper (>= 9.0.0), curl, git, jq, libcurl4-openssl-dev, ros-melodic-catkin, ros-melodic-cmake-modules, ros-melodic-diagnostic-updater, ros-melodic-geometry-msgs, ros-melodic-mavros-msgs, ros-melodic-message-generation, ros-melodic-microstrain-inertial-msgs, ros-melodic-nav-msgs, ros-melodic-nmea-msgs, ros-melodic-roscpp, ros-melodic-roslint, ros-melodic-sensor-msgs, ros-melodic-std-msgs, ros-melodic-std-srvs, ros-melodic-tf2, ros-melodic-tf2-geometry-msgs, ros-melodic-tf2-ros
+Homepage: https://github.com/LORD-MicroStrain/microstrain_inertial
+Standards-Version: 3.9.2
+
+Package: ros-melodic-microstrain-inertial-driver
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-melodic-cmake-modules, ros-melodic-diagnostic-aggregator, ros-melodic-diagnostic-updater, ros-melodic-geometry-msgs, ros-melodic-mavros-msgs, ros-melodic-message-runtime, ros-melodic-microstrain-inertial-msgs, ros-melodic-nav-msgs, ros-melodic-nmea-msgs, ros-melodic-roscpp, ros-melodic-sensor-msgs, ros-melodic-std-msgs, ros-melodic-std-srvs, ros-melodic-tf2, ros-melodic-tf2-geometry-msgs, ros-melodic-tf2-ros
+Description: The ros_mscl package provides a driver for the LORD/Microstrain inertial products.
