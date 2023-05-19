@@ -565,7 +565,7 @@ template <class ClassType>
 RosTimerType createTimer(RosNodeType* node, double hz, void (ClassType::*fp)(), ClassType* obj)
 {
   return std::make_shared<::ros::Timer>(
-      node->template createTimer(ros::Duration(1.0 / hz), [=](const ros::TimerEvent& event) { (obj->*fp)(); }));
+      node->createTimer(::ros::Duration(1.0 / hz), [obj, fp](const ::ros::TimerEvent&) { (obj->*fp)(); });
 }
 
 /**
