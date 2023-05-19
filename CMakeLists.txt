@@ -198,11 +198,7 @@ set_source_files_properties(${COMMON_SRC_DIR}/services.cpp PROPERTIES COMPILE_OP
 add_definitions(-DMICROSTRAIN_DRIVER_VERSION="${DRIVER_GIT_VERSION}")
 
 # Let the code know if it is being compiled with ROS1 or ROS2
-if(DEFINED ENV{ROS_VERSION})
-  add_definitions(-DMICROSTRAIN_ROS_VERSION=$ENV{ROS_VERSION})
-else()
-  message(FATAL_ERROR "ROS_VERSION environment variable is not set.")
-endif()
+add_definitions(-DMICROSTRAIN_ROS_VERSION=1)
 
 # Allow the MSCL include directory to be accessed
 include_directories(${MSCL_INC_PATH} ${BOOST_INC_PATH})
